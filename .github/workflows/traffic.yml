@@ -1,0 +1,27 @@
+name: Traffic Agent
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+
+  run:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - run: pip install requests
+
+      - run: python agent.py
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          ZALO_TOKEN: ${{ secrets.ZALO_TOKEN }}
+          ZALO_USER_ID: ${{ secrets.ZALO_USER_ID }}
